@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+﻿using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.StaticFiles;
 
 namespace Slor.Evernote.QuickCreate.Web
 {
@@ -8,7 +7,13 @@ namespace Slor.Evernote.QuickCreate.Web
     {
         public void Configure(IApplicationBuilder app)
         {
-            // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+            app.UseErrorPage();
+
+            app.UseDefaultFiles(new DefaultFilesOptions() { DefaultFileNames = new[] { "index.html" } });
+
+            app.UseStaticFiles();            
+
+            // that's all folkes since we just have a single html page for now :]
         }
     }
 }
