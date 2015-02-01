@@ -8,21 +8,26 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="scripts/evernote-sdk-minified.js"></script>
+    <script src="scripts/main.js"></script>
+
 </head>
 <body>
     <div data-role="page" id="signin">
         <div data-role="header"><h1>Sign in</h1></div>
         <div role="main" class="ui-content">            
-            <form>
-                <div class="ui-field-contain">
-                    <label for="token">Developer token:</label>
-                    <input type="text" name="token" id="token" placeholder="" value="S=s285:U=2448d9e:E=152930fa665:C=14b3b5e78b0:P=1cd:A=en-devtoken:V=2:H=f059964f79a169e5763bea4e7df54128">
-                </div>
-                <div class="ui-field-contain">
-                    <label for="url">Notestore url:</label>
-                    <input type="text" name="url" id="url" placeholder="" value="https://www.evernote.com/shard/s285/notestore">
-                </div>
-                <input type="button" value="Signin">
+            <form method="post" action="/signin" data-ajax="false">
+                <fieldset>
+                    <div class="ui-field-contain">
+                        <label for="token">Developer token:</label>
+                        <input type="text" name="token" id="token" placeholder="" value="S=s285:U=2448d9e:E=152930fa665:C=14b3b5e78b0:P=1cd:A=en-devtoken:V=2:H=f059964f79a169e5763bea4e7df54128">
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="url">Notestore url:</label>
+                        <input type="text" name="url" id="url" placeholder="" value="https://www.evernote.com/shard/s285/notestore">
+                    </div>
+                    <input id="submit" name="submit" type="submit" value="Signin">
+                </fieldset>
             </form>
 
             <p>Don't have a developer token? <a href="https://www.evernote.com/api/DeveloperToken.action">create it</a></p>
@@ -34,6 +39,13 @@
         <div data-role="header"><h1>Quick create</h1></div>
         <div role="main" class="ui-content">
             <p>Select the type</p>            
+        </div>
+        <div data-role="footer">...</div>
+    </div>
+    <div data-role="page" id="dashboard">
+        <div data-role="header"><h1>New note</h1></div>
+        <div role="main" class="ui-content">
+            <p><span id="name" /></p>
         </div>
         <div data-role="footer">...</div>
     </div>
