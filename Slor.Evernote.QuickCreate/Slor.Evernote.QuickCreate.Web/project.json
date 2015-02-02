@@ -12,19 +12,18 @@
         "**.vspscc"
     ],
     "dependencies": {
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta2", // TODO remove this since hosting on linux
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta2",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-beta2",
         "Microsoft.AspNet.StaticFiles": "1.0.0-beta2",
-        "Microsoft.AspNet.Diagnostics": "1.0.0-beta2",
+        "Microsoft.AspNet.Diagnostics": "1.0.0-beta2",        
         "Microsoft.AspNet.Routing": "1.0.0-beta2",
         "Microsoft.AspNet.Security.Cookies": "1.0.0-beta2",
         "Newtonsoft.Json": "4.5.9",        
         "Kestrel": "1.0.0-beta2",
-        "evernote-cloud-sdk-windows":  "1.0.7"
+        "evernote-cloud-sdk-windows": "1.0.7"        
     },
     "frameworks": {
-        "aspnet50": { },
-        //"aspnetcore50": { } Can't target core50 since the evernote package does not support it
+        "aspnet50": { }
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5000",

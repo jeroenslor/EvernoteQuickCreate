@@ -1,4 +1,4 @@
-﻿$(document).ready(function(){
+﻿$(document).on("pageinit", function(e){
     $("#signin.form").on('submit', function (e) {
 
         e.preventDefault();

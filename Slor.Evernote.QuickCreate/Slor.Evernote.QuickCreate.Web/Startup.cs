@@ -16,6 +16,8 @@ using EvernoteSDK;
 using System.Security.Claims;
 using Microsoft.AspNet.Http.Security;
 using Newtonsoft.Json;
+using Microsoft.AspNet.FileSystems;
+using Microsoft.AspNet.Hosting;
 
 namespace Slor.Evernote.QuickCreate.Web
 {
@@ -28,18 +30,16 @@ namespace Slor.Evernote.QuickCreate.Web
         }
 
         public void Configure(IApplicationBuilder app)
-        {        
-            app.UseErrorPage().UseStaticFiles();
-
-            app.UseDefaultFiles(new DefaultFilesOptions() { DefaultFileNames = new[] { "index.html" } });
+        {
+            app.UseErrorPage().UseDefaultFiles().UseStaticFiles();
 
             app.UseCookieAuthentication(options =>
-            {                
-                options.LoginPath = new PathString("/");    
+            {
+                options.LoginPath = new PathString("/");
             });
 
             var routeBuilder = new RouteBuilder() { ServiceProvider = app.ApplicationServices };
-            routeBuilder.MapSimpleRoute("signin", "signing", null, null, new { httpMethod = new HttpMethodContraint("post") }, async context =>
+            routeBuilder.MapSimpleRoute("/signin", "signing", null, null, new { httpMethod = new HttpMethodContraint("post") }, async context =>
               {
                   var data = await GetSigninData(context.HttpContext.Response.Body);
 
@@ -49,14 +49,15 @@ namespace Slor.Evernote.QuickCreate.Web
                   if (isAuthenticated)
                   {
                       context.HttpContext.Response.SignIn(new AuthenticationProperties() { IsPersistent = true }, new ClaimsIdentity(new[] { new Claim("name", ENSession.SharedSession.UserDisplayName) }));
-                  }                  
+                  }
 
                   context.HttpContext.Response.ContentType = "application/json";
                   await context.HttpContext.Response.WriteAsync(await JsonConvert.SerializeObjectAsync(new { success = ENSession.SharedSession.IsAuthenticated, name = ENSession.SharedSession.UserDisplayName }));
-              });            
+              });
 
-            // Deny anonymous request beyond this point
-            app.Use(async (context, next) => {
+            //Deny anonymous request beyond this point
+            app.Use(async (context, next) =>
+            {
                 if (!context.User.Identity.IsAuthenticated)
                 {
                     await context.Response.WriteAsync("You need to be authenticated");
@@ -69,7 +70,7 @@ namespace Slor.Evernote.QuickCreate.Web
             app.Map("/foo", fooApp =>
             {
                 fooApp.Run(async context => await context.Response.WriteAsync("Only when authed"));
-            });            
+            });
 
             // that's all folkes since we just have a single html page for now :]
         }        
